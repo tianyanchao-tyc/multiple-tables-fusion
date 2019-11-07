@@ -4,7 +4,8 @@ import base.service.multiple.tables.fusion.entity.SelectTable;
 import base.service.multiple.tables.fusion.service.FusionService;
 import base.service.multiple.tables.fusion.vo.Table;
 import io.swagger.annotations.Api;
-import org.json.JSONArray;
+import net.sf.json.JSONArray;
+import net.sf.json.JsonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,14 +50,16 @@ public class FusionController {
      * 根据字段及表关系生成sql查询数据
      *
      * @param map  map
-     * @param list list
+     * @param relation list
      * @return 数据
      * @author tyc
      * date 2019-11-07
      **/
     @PostMapping("/getData")
     public List<LinkedHashMap<String, Object>> getData(@RequestBody Map<String, List<Table>> map,
-                                                       @RequestParam List<String > list) {
+                                                       @RequestParam String relation) {
+        JSONArray jsonArray = JSONArray.fromObject(relation);
+        List list = JSONArray.toList(jsonArray, relation, new JsonConfig());
         return fusionService.getData(map, list);
     }
 }

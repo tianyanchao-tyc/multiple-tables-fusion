@@ -8,10 +8,8 @@ import base.service.multiple.tables.fusion.util.JDBCUtils;
 import base.service.multiple.tables.fusion.vo.Relation;
 import base.service.multiple.tables.fusion.vo.Table;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
