@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.LinkedHashMap;
+import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
 
@@ -56,9 +56,10 @@ public class FusionController {
      * date 2019-11-07
      **/
     @PostMapping("/getData")
-    public List<LinkedHashMap<String, Object>> getData(@RequestBody Map<String, List<Table>> map,
-                                                       @RequestParam String relation) {
-        JSONArray jsonArray = JSONArray.fromObject(relation);
+    public List getData(@RequestBody Map<String, List<Table>> map,
+                        @RequestParam String relation) {
+        String decode = URLDecoder.decode(relation);
+        JSONArray jsonArray = JSONArray.fromObject(decode);
         List list = JSONArray.toList(jsonArray, relation, new JsonConfig());
         return fusionService.getData(map, list);
     }

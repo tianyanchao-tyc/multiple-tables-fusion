@@ -5,10 +5,10 @@
     <resultMap id="Result" type="base.service.multiple.tables.fusion.entity.TableRelation">
         <result property="id" jdbcType="VARCHAR" column="id"/>
         <result property="dataBaseId" jdbcType="VARCHAR" column="data_base_id"/>
-        <result property="fieldA" jdbcType="VARCHAR" column="field"/>
+        <result property="fieldA" jdbcType="VARCHAR" column="fielda"/>
         <result property="relation" jdbcType="VARCHAR" column="relation"/>
         <result property="sql" jdbcType="VARCHAR" column="sql"/>
-        <result property="fieldB" jdbcType="VARCHAR" column="fieldB"/>
+        <result property="fieldB" jdbcType="VARCHAR" column="fieldb"/>
     </resultMap>
 
 
@@ -26,7 +26,7 @@
     </select>
 
     <insert id="insertRelation" parameterType="java.util.ArrayList">
-        insert into table_relation (id,dataBaseId,fieldA，fieldB,relation，sql)
+        insert into table_relation (id,data_base_id,fielda,fieldb,relation,sql)
         values
         <foreach collection="list" index="index" item="tableRelation" separator=",">
             (

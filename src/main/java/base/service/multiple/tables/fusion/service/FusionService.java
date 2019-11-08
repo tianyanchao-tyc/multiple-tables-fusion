@@ -14,10 +14,10 @@ import java.sql.Connection;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * 服务层
@@ -60,10 +60,8 @@ public class FusionService {
      * @author tyc
      * date 2019-11-07
      **/
-    public List<LinkedHashMap<String, Object>> getData(Map<String, List<Table>> map, List<String> list) {
+    public List<TableRelation> getData(Map<String, List<Table>> map, List<String> list) {
         Set<String> strings = map.keySet();
-        StringBuilder fields = new StringBuilder();
-        StringBuilder tables = new StringBuilder();
         List<TableRelation> tableRelationList = new ArrayList<>();
         for (String dataBaseId : strings) {
             List<Table> tableList = map.get(dataBaseId);
@@ -71,7 +69,7 @@ public class FusionService {
             setRelation(relationList, tableRelationList, dataBaseId, tableList);
         }
         fusionDao.insertRelation(tableRelationList);
-        return null;
+        return tableRelationList;
     }
 
     /**
@@ -90,7 +88,9 @@ public class FusionService {
                              List<Table> tableList) {
         for (Relation relation : relationList) {
             TableRelation tableRelation = new TableRelation();
+            tableRelation.setId(UUID.randomUUID().toString().replaceAll("-",""));
             tableRelation.setDataBaseId(dataBaseId);
+            tableRelation.setRelation(relation.getRelation());
             for (Table table : tableList) {
                 if (table.getTableName().equals(relation.getTableA())) {
                     tableRelation.setFieldA(table.getField());
@@ -114,9 +114,10 @@ public class FusionService {
         List<Relation> relationList = new ArrayList<>();
         for (String tableRelation : list) {
             Relation relation = new Relation();
-            String[] strings = tableRelation.split(".");
+            String[] strings = tableRelation.split("[.]");
+            String[] split = strings[1].split("=");
             relation.setTableA(strings[0]);
-            relation.setTableB(strings[2]);
+            relation.setTableB(split[1]);
             relation.setRelation(tableRelation);
             relationList.add(relation);
         }
