@@ -21,7 +21,17 @@
         <parameter property="fieldB" resultMap="Result"/>
     </parameterMap>
 
-    <select id="getDataBase" parameterType="java.lang.String" resultType="base.service.multiple.tables.fusion.entity.DataBase">
+    <resultMap id="Result_Data_Base" type="base.service.multiple.tables.fusion.entity.DataBase">
+        <result column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="driver_class_name" jdbcType="VARCHAR" property="driverClassName"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="data_base" jdbcType="VARCHAR" property="dataBase"/>
+        <result column="data_base_type" jdbcType="INTEGER" property="dataBaseType"/>
+    </resultMap>
+
+    <select id="getDataBase" parameterType="java.lang.String" resultMap="Result_Data_Base">
         select * from data_base where id = #{id,jdbcType=VARCHAR}
     </select>
 
